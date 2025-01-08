@@ -77,7 +77,6 @@ const Calendar = ({ className, value, onChange }) => {
 
   return (
     <div className={cn("p-3 bg-white rounded-lg shadow", className)}>
-      {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={handlePrevMonth}
@@ -96,7 +95,6 @@ const Calendar = ({ className, value, onChange }) => {
         </button>
       </div>
 
-      {/* Days of week */}
       <div className="grid grid-cols-7 mb-2">
         {dayNames.map((day) => (
           <div key={day} className="text-center text-sm text-gray-500">
@@ -105,7 +103,6 @@ const Calendar = ({ className, value, onChange }) => {
         ))}
       </div>
 
-      {/* Calendar grid */}
       <div className="grid grid-cols-7 gap-1">
         {Array.from({ length: firstDayOfMonth }).map((_, index) => (
           <div key={`empty-${index}`} className="h-8" />

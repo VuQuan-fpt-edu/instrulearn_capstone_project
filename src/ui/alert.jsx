@@ -6,11 +6,11 @@ const Alert = React.forwardRef(({ className, variant, ...props }, ref) => {
 
   switch (variant) {
     case "destructive":
-      variantClasses = "bg-red-700 text-white"; // Đỏ lòm
+      variantClasses = "bg-red-700 text-white";
       break;
     case "default":
     default:
-      variantClasses = "bg-green-700 text-white"; // Xanh lá
+      variantClasses = "bg-green-700 text-white";
       break;
   }
 
