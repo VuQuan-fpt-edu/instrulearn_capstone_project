@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "../lib/utils";
-import { Dialog } from "./dialog"; // Adjust import path as needed
+import { Dialog } from "./dialog";
 
 const AlertDialog = ({ open, onOpenChange, children }) => {
   return (

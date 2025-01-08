@@ -33,28 +33,27 @@ const Registration = () => {
   const [audio] = useState(
     new Audio("/assets/image/registration-login-musicBG.mp3")
   );
-  const [isMuted, setIsMuted] = useState(true); // Bắt đầu với trạng thái muted
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
-    // Khởi tạo audio
     audio.loop = true;
-    audio.muted = true;
 
-    // Play audio trong trạng thái muted
-    audio.play().catch((error) => {
-      console.log("Audio playback failed:", error);
-    });
+    const playAudio = async () => {
+      try {
+        await audio.play();
+        audio.muted = true;
+      } catch (error) {
+        console.log("Audio playback failed:", error);
+      }
+    };
+
+    playAudio();
 
     return () => {
       audio.pause();
       audio.currentTime = 0;
     };
   }, [audio]);
-
-  useEffect(() => {
-    // Cập nhật trạng thái muted của audio
-    audio.muted = isMuted;
-  }, [isMuted, audio]);
 
   const handleGoogleSignup = () => {
     console.log("Google signup clicked");
@@ -65,20 +64,22 @@ const Registration = () => {
     setShowOTPInput(true);
   };
 
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-
-    // Nếu đang unmute, đảm bảo audio đang phát
-    if (!isMuted) {
-      audio.play().catch((error) => {
-        console.log("Audio playback failed:", error);
-      });
+  const toggleMute = async () => {
+    try {
+      if (isMuted) {
+        audio.muted = false;
+        await audio.play();
+      } else {
+        audio.muted = true;
+      }
+      setIsMuted(!isMuted);
+    } catch (error) {
+      console.log("Toggle audio failed:", error);
     }
   };
 
   return (
     <div className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden">
-      {/* Video Background */}
       <video
         autoPlay
         loop
@@ -89,7 +90,6 @@ const Registration = () => {
         <source src="/assets/image/register-loginBG.mp4" type="video/mp4" />
       </video>
 
-      {/* Floating music icons */}
       <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
         {[...Array(5)].map((_, i) => (
           <Music2
@@ -105,7 +105,6 @@ const Registration = () => {
         ))}
       </div>
 
-      {/* Sound Control Button */}
       <button
         onClick={toggleMute}
         className="absolute top-4 right-4 p-3 rounded-full bg-white/80 hover:bg-white transition-all duration-300 shadow-lg flex items-center gap-2"
